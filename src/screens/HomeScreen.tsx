@@ -1,36 +1,17 @@
 import ButtonPrimary from '@/components/ButtonPrimary'
 import Hero from '@/components/Hero'
-import InputAndLabel from '@/components/InputAndLabel'
-import { useState } from 'react'
+import { palette } from '@/const/palette'
 import { StyleSheet, View, Image, Alert } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')
 
-const title = 'Little Lemon'
-const subTitle = 'Chicago'
-const textBody = `We are a family owned Mediterranean restaurant,
-focused on traditional recipes served with a modern twist.`
-
-const OnboardingScreen = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-
+const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={Logo} />
             </View>
-            <Hero title={title} subTitle={subTitle} body={textBody} />
-            <InputAndLabel
-                label={'First name'}
-                value={name}
-                onChangeCallback={(text) => setName(text)}
-            />
-            <InputAndLabel
-                label={'Email'}
-                value={email}
-                onChangeCallback={(text) => setEmail(text)}
-            />
+            <Hero title={'Home'} />
             <View style={styles.rowBottom}>
                 <ButtonPrimary
                     label={'Next'}
@@ -60,4 +41,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default OnboardingScreen
+export default HomeScreen
