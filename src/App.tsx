@@ -3,23 +3,61 @@ import { useFonts } from 'expo-font'
 import { useCallback } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import OnboardingScreen from '@/screens/Onboarding'
-import HomeScreen from '@/screens/HomeScreen'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useOnboardingStorage } from './hooks/useOnboardingStorage'
+import OnboardingScreen from '@/screens/OnboardingScreen'
+import ProfileScreen from '@/screens/ProfileScreen'
+import HomeScreen from '@/screens/HomeScreen'
+import OnboardingProvider from '@/context/OnboardingContext'
+import UserProvider from './context/UserContext'
+import { useLoadUserData } from './hooks/useLoadUserData'
 
 SplashScreen.preventAutoHideAsync()
-const Stack = createStackNavigator()
+
+export type RootStackParamList = {
+    Profile: undefined
+    Onboarding: undefined
+    Home: undefined
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
+
+function RootNavigation() {
+    useLoadUserData()
+    const { isOnboardingCompleted } = useOnboardingStorage()
+
+    console.log('Is Onboarding complete', isOnboardingCompleted)
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                {isOnboardingCompleted ? (
+                    <>
+                        <Stack.Screen name="Home" component={HomeScreen} />
+                        <Stack.Screen
+                            name="Profile"
+                            component={ProfileScreen}
+                        />
+                    </>
+                ) : (
+                    <Stack.Screen
+                        name="Onboarding"
+                        component={OnboardingScreen}
+                    />
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
 
 export default function App() {
-    const { isLoadingStorage, isOnboardingCompleted } = useOnboardingStorage()
     const [fontsLoaded, fontError] = useFonts({
         'markazi-regular': require('@assets/fonts/MarkaziText-Regular.ttf'),
         'karla-regular': require('@assets/fonts/Karla-Regular.ttf'),
     })
 
     const onLayoutRootView = useCallback(async () => {
-        if (fontsLoaded || fontError || !isLoadingStorage) {
+        if (fontsLoaded || fontError) {
             await SplashScreen.hideAsync()
         }
     }, [fontsLoaded, fontError])
@@ -29,18 +67,12 @@ export default function App() {
     if (!fontsLoaded && !fontError) {
         return null
     }
+
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Onbording">
-                {isOnboardingCompleted ? (
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                ) : (
-                    <Stack.Screen
-                        name="Onbording"
-                        component={OnboardingScreen}
-                    />
-                )}
-            </Stack.Navigator>
-        </NavigationContainer>
+        <OnboardingProvider>
+            <UserProvider>
+                <RootNavigation />
+            </UserProvider>
+        </OnboardingProvider>
     )
 }

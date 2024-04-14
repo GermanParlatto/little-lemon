@@ -1,8 +1,14 @@
+import { RootStackParamList } from '@/App'
 import ButtonPrimary from '@/components/ButtonPrimary'
 import Hero from '@/components/Hero'
 import InputAndLabel from '@/components/InputAndLabel'
-import { useState } from 'react'
-import { StyleSheet, View, Image, Alert } from 'react-native'
+import { EMAIL, FIRST_NAME, ONBOARDING_STATUS } from '@/const/keys'
+import { OnboardingContext } from '@/context/OnboardingContext'
+import { UserContext } from '@/context/UserContext'
+import storage from '@/hooks/storage'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { useContext, useState } from 'react'
+import { StyleSheet, View, Image } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')
 
@@ -11,9 +17,25 @@ const subTitle = 'Chicago'
 const textBody = `We are a family owned Mediterranean restaurant,
 focused on traditional recipes served with a modern twist.`
 
-const OnboardingScreen = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
+type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>
+
+const OnboardingScreen = ({ navigation }: Props) => {
+    const { setOnboardingStatus } = useContext(OnboardingContext)
+    const { firstName, email, setFirstName, setEmail } = useContext(UserContext)
+
+    const completeOnboarding = async (name: string, email: string) => {
+        const fieldValids = name !== '' && email !== ''
+
+        if (fieldValids) {
+            await storage.save({
+                key: ONBOARDING_STATUS,
+                data: 'completed',
+            })
+            await storage.save({ key: FIRST_NAME, data: name })
+            await storage.save({ key: EMAIL, data: email })
+            setOnboardingStatus('completed')
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -23,8 +45,8 @@ const OnboardingScreen = () => {
             <Hero title={title} subTitle={subTitle} body={textBody} />
             <InputAndLabel
                 label={'First name'}
-                value={name}
-                onChangeCallback={(text) => setName(text)}
+                value={firstName}
+                onChangeCallback={(text) => setFirstName(text)}
             />
             <InputAndLabel
                 label={'Email'}
@@ -34,7 +56,7 @@ const OnboardingScreen = () => {
             <View style={styles.rowBottom}>
                 <ButtonPrimary
                     label={'Next'}
-                    onPressCallback={() => Alert.alert('Simple Button pressed')}
+                    onPressCallback={() => completeOnboarding(firstName, email)}
                 />
             </View>
         </View>

@@ -1,29 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import storage from './storage'
+import { ONBOARDING_STATUS } from '@/const/keys'
+import { OnboardingContext } from '@/context/OnboardingContext'
 
 const useOnboardingStorage = () => {
-    const [isOnboardingCompleted, setIsOboardingCompleted] = useState(false)
-    const [isLoadingStorage, setIsLoading] = useState(true)
+    const { setOnboardingStatus, onboardingStatus } =
+        useContext(OnboardingContext)
 
     const checkOnboardingIsComplete = async () => {
         try {
-            const isCompleted = await storage.load({
-                key: 'isOnboardingCompleted',
+            const onboardingStatus = await storage.load({
+                key: ONBOARDING_STATUS,
             })
-            if (isCompleted) {
-                setIsOboardingCompleted(isCompleted)
+
+            if (onboardingStatus === 'completed') {
+                setOnboardingStatus(onboardingStatus)
             }
-            setIsLoading(false)
         } catch (e) {
-            setIsLoading(false)
+            console.log('Custom error occourrs on loading async storage:', e)
         }
     }
-
     useEffect(() => {
         checkOnboardingIsComplete()
     }, [])
 
-    return { isOnboardingCompleted, isLoadingStorage }
+    const isOnboardingCompleted = onboardingStatus === 'completed'
+
+    return { isOnboardingCompleted }
 }
 
 export { useOnboardingStorage }
