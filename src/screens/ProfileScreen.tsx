@@ -1,5 +1,4 @@
 import ButtonPrimary from '@/components/ButtonPrimary'
-import Hero from '@/components/Hero'
 import InputAndLabel from '@/components/InputAndLabel'
 import { useContext, useState } from 'react'
 import { StyleSheet, View, Image, Alert } from 'react-native'
@@ -12,6 +11,7 @@ import { RootStackParamList } from '@/App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { OnboardingContext } from '@/context/OnboardingContext'
 import { UserContext } from '@/context/UserContext'
+import AvatarSection from '@/components/AvatarSection'
 
 const Logo = require('@assets/images/Logo.png')
 
@@ -44,7 +44,7 @@ const ProfileScreen = ({ navigation }: Props) => {
                 <Image source={Logo} />
                 <Icon name="arrow-circle-left" type={'font-awesome'} />
             </View>
-            <Hero title={'Profile'} />
+            <AvatarSection />
             <InputAndLabel
                 label={'First name'}
                 value={firstName}

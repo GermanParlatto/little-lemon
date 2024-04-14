@@ -7,7 +7,7 @@ import { OnboardingContext } from '@/context/OnboardingContext'
 import { UserContext } from '@/context/UserContext'
 import storage from '@/hooks/storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')

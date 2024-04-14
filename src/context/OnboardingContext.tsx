@@ -17,7 +17,7 @@ type Props = {
 
 export default function OnboardingProvider({ children }: Props) {
     const [state, setState] = useState<OnboardingStatusType>('uncompleted')
-
+    console.log('Render Onboarding provider...')
     return (
         <OnboardingContext.Provider
             value={{ onboardingStatus: state, setOnboardingStatus: setState }}

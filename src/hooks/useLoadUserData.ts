@@ -5,7 +5,7 @@ import { UserContext } from '@/context/UserContext'
 
 const useLoadUserData = () => {
     const { setFirstName, setEmail } = useContext(UserContext)
-    console.log('Loading user data...')
+    // console.log('Loading user data...')
     const loadUserData = async () => {
         try {
             const firstName = await storage.load({
