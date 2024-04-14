@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
         backgroundColor: palette.primary.second,
         paddingVertical: 8,
         borderRadius: 8,
-        marginBottom: 40,
+        marginBottom: 16,
     },
     buttonText: {
         fontFamily: 'karla-regular',
-        fontSize: 20,
-        color: palette.hightlight.dark,
+        fontSize: 18,
+        color: '#000',
         textAlign: 'center',
     },
 })

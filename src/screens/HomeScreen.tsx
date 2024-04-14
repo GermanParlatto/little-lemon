@@ -1,11 +1,14 @@
+import { RootStackParamList } from '@/App'
 import ButtonPrimary from '@/components/ButtonPrimary'
 import Hero from '@/components/Hero'
-import { palette } from '@/const/palette'
-import { StyleSheet, View, Image, Alert } from 'react-native'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { StyleSheet, View, Image } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')
 
-const HomeScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
+
+const HomeScreen = ({ navigation }: Props) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -14,8 +17,8 @@ const HomeScreen = () => {
             <Hero title={'Home'} />
             <View style={styles.rowBottom}>
                 <ButtonPrimary
-                    label={'Next'}
-                    onPressCallback={() => Alert.alert('Simple Button pressed')}
+                    label={'Go to Profile'}
+                    onPressCallback={() => navigation.navigate('Profile')}
                 />
             </View>
         </View>
