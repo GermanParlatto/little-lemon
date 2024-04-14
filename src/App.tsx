@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -22,7 +22,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-function RootNavigation() {
+const RootNavigation = memo(function RootNavigation() {
     useLoadUserData()
     const { isOnboardingCompleted } = useOnboardingStorage()
 
@@ -48,7 +48,7 @@ function RootNavigation() {
             </Stack.Navigator>
         </NavigationContainer>
     )
-}
+})
 
 export default function App() {
     const [fontsLoaded, fontError] = useFonts({

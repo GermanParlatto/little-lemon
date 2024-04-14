@@ -35,6 +35,8 @@ export default function UserProvider({ children }: Props) {
     const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
 
+    console.log('Render User provider...')
+
     return (
         <UserContext.Provider
             value={{
