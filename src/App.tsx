@@ -52,6 +52,8 @@ export default function App() {
     const [fontsLoaded, fontError] = useFonts({
         'markazi-regular': require('@assets/fonts/MarkaziText-Regular.ttf'),
         'karla-regular': require('@assets/fonts/Karla-Regular.ttf'),
+        'karla-bold': require('@assets/fonts/Karla-Bold.ttf'),
+        'karla-extra-bold': require('@assets/fonts/Karla-ExtraBold.ttf'),
     })
 
     const onLayoutRootView = useCallback(async () => {

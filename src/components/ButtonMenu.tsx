@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Alert, Pressable } from 'react-native'
 
 type Props = { onPressCallback: () => void; label: string }
 
-const ButtonPrimary = ({ onPressCallback, label }: Props) => {
+const ButtonMenu = ({ onPressCallback, label }: Props) => {
     return (
         <View>
             <Pressable style={styles.button} onPress={() => onPressCallback()}>
@@ -14,17 +14,17 @@ const ButtonPrimary = ({ onPressCallback, label }: Props) => {
 }
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: palette.primary.second,
-        paddingVertical: 8,
-        borderRadius: 8,
-        marginBottom: 16,
+        backgroundColor: palette.hightlight.light,
+        padding: 10,
+        borderRadius: 16,
     },
     buttonText: {
-        fontFamily: 'karla-bold',
-        fontSize: 20,
-        color: '#000',
+        fontFamily: 'karla-extra-bold',
+        fontSize: 14,
+        color: palette.primary.main,
         textAlign: 'center',
+        textTransform: 'capitalize',
     },
 })
 
-export default ButtonPrimary
+export default ButtonMenu

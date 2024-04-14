@@ -3,6 +3,7 @@ import ButtonPrimary from '@/components/ButtonPrimary'
 import Hero from '@/components/Hero'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StyleSheet, View, Image } from 'react-native'
+import MenuBreakdown from '@/components/MenuBreakdown'
 
 const Logo = require('@assets/images/Logo.png')
 const title = 'Little Lemon'
@@ -18,7 +19,11 @@ const HomeScreen = ({ navigation }: Props) => {
             <View style={styles.header}>
                 <Image source={Logo} />
             </View>
+
             <Hero title={title} subTitle={subTitle} body={textBody} />
+
+            <MenuBreakdown />
+
             <View style={styles.rowBottom}>
                 <ButtonPrimary
                     label={'Go to Profile'}

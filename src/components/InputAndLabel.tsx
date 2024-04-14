@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textLabel: {
-        marginBottom: 8,
-        fontFamily: 'karla-regular',
+        marginBottom: 4,
+        fontFamily: 'karla-bold',
         fontSize: 18,
         color: palette.hightlight.dark,
     },
