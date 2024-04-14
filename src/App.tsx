@@ -26,8 +26,6 @@ const RootNavigation = memo(function RootNavigation() {
     useLoadUserData()
     const { isOnboardingCompleted } = useOnboardingStorage()
 
-    console.log('Is Onboarding complete', isOnboardingCompleted)
-
     return (
         <NavigationContainer>
             <Stack.Navigator>

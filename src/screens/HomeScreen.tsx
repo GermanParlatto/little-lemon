@@ -5,6 +5,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StyleSheet, View, Image } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')
+const title = 'Little Lemon'
+const subTitle = 'Chicago'
+const textBody = `We are a family owned Mediterranean restaurant,
+focused on traditional recipes served with a modern twist.`
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
@@ -14,7 +18,7 @@ const HomeScreen = ({ navigation }: Props) => {
             <View style={styles.header}>
                 <Image source={Logo} />
             </View>
-            <Hero title={'Home'} />
+            <Hero title={title} subTitle={subTitle} body={textBody} />
             <View style={styles.rowBottom}>
                 <ButtonPrimary
                     label={'Go to Profile'}
