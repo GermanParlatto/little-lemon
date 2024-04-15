@@ -1,30 +1,19 @@
 import { View, StyleSheet } from 'react-native'
-import { Avatar, Dialog } from '@rneui/themed'
+import { AvatarProps, Dialog } from '@rneui/themed'
 import { useContext, useState } from 'react'
 import { UserContext } from '@/context/UserContext'
 import ButtonSecondary from './ButtonSecondary'
 import * as ImagePicker from 'expo-image-picker'
+import AvatarWithInitials from './AvatarWithInitials'
 
-function getInitials(firstName: string, lastName: string) {
-    if (!firstName && !lastName) return 'NN'
-
-    let result = ''
-    if (firstName) {
-        result = firstName.slice(0, 1).toUpperCase()
-    }
-
-    if (firstName) {
-        result.concat(lastName.slice(0, 1).toUpperCase())
-    }
-    return result
+type Props = {
+    size: AvatarProps['size']
 }
 
-export default function AvatarSection() {
-    const [image, setImage] = useState<null | string>(null)
+export default function AvatarSection({ size }: Props) {
     const [openDialog, setOpenDialog] = useState(false)
-    const { firstName, lastName } = useContext(UserContext)
 
-    const initials = getInitials(firstName, lastName)
+    const { setImage } = useContext(UserContext)
 
     const toggleDialog = () => {
         setOpenDialog(!openDialog)
@@ -47,22 +36,10 @@ export default function AvatarSection() {
 
     return (
         <View style={styles.row}>
-            {image ? (
-                <Avatar
-                    size={'large'}
-                    rounded
-                    onPress={() => toggleDialog()}
-                    source={{ uri: image }}
-                />
-            ) : (
-                <Avatar
-                    size={'large'}
-                    rounded
-                    title={initials}
-                    onPress={() => toggleDialog()}
-                    containerStyle={{ backgroundColor: 'purple' }}
-                />
-            )}
+            <AvatarWithInitials
+                size={size}
+                onPressCallback={() => toggleDialog()}
+            />
             <Dialog
                 isVisible={openDialog}
                 onBackdropPress={() => toggleDialog()}
@@ -92,6 +69,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-around',
+
         alignItems: 'center',
     },
 })

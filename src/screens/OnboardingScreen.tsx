@@ -17,9 +17,12 @@ const subTitle = 'Chicago'
 const textBody = `We are a family owned Mediterranean restaurant,
 focused on traditional recipes served with a modern twist.`
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>
+type OnboardingScreenProps = NativeStackScreenProps<
+    RootStackParamList,
+    'Onboarding'
+>
 
-const OnboardingScreen = ({ navigation }: Props) => {
+const OnboardingScreen = ({ navigation }: OnboardingScreenProps) => {
     const { setOnboardingStatus } = useContext(OnboardingContext)
     const { firstName, email, setFirstName, setEmail } = useContext(UserContext)
 

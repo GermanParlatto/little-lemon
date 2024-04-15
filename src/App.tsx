@@ -28,7 +28,7 @@ const RootNavigation = memo(function RootNavigation() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {isOnboardingCompleted ? (
                     <>
                         <Stack.Screen name="Home" component={HomeScreen} />

@@ -1,8 +1,7 @@
 import ButtonPrimary from '@/components/ButtonPrimary'
 import InputAndLabel from '@/components/InputAndLabel'
-import { useContext, useState } from 'react'
-import { StyleSheet, View, Image, Alert, Text, ScrollView } from 'react-native'
-import { Icon } from '@rneui/themed'
+import { useContext } from 'react'
+import { StyleSheet, View, Alert, Text, ScrollView } from 'react-native'
 import { palette } from '@/const/palette'
 import ButtonSecondary from '@/components/ButtonSecondary'
 import storage from '@/hooks/storage'
@@ -13,12 +12,11 @@ import { OnboardingContext } from '@/context/OnboardingContext'
 import { UserContext } from '@/context/UserContext'
 import AvatarSection from '@/components/AvatarSection'
 import CheckBoxAndLabel from '@/components/CheckBoxAndLabel'
+import Header from '@/components/Header'
 
-const Logo = require('@assets/images/Logo.png')
+type ProfileScreenProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
-
-const ProfileScreen = ({ navigation }: Props) => {
+const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     const { setOnboardingStatus } = useContext(OnboardingContext)
     const { firstName, lastName, phoneNumber, email, setFirstName, setEmail } =
         useContext(UserContext)
@@ -34,18 +32,14 @@ const ProfileScreen = ({ navigation }: Props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Icon
-                    name="arrow-circle-left"
-                    type={'font-awesome'}
-                    color={palette.primary.main}
-                    size={40}
-                />
+            <Header
+                onPressBack={() => {
+                    navigation.canGoBack() && navigation.goBack()
+                }}
+            />
 
-                <Image source={Logo} />
-                <Icon name="arrow-circle-left" type={'font-awesome'} />
-            </View>
-            <AvatarSection />
+            <AvatarSection size={'large'} />
+
             <ScrollView>
                 <InputAndLabel
                     label={'First name'}
@@ -120,14 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: '#FFF',
-    },
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        minHeight: 70,
-        paddingHorizontal: 20,
+        marginTop: 40,
     },
     rowBottom: {
         flex: 1,
