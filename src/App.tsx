@@ -26,11 +26,9 @@ const RootNavigation = memo(function RootNavigation() {
     useLoadUserData()
     const { isOnboardingCompleted } = useOnboardingStorage()
 
-    console.log('Is Onboarding complete', isOnboardingCompleted)
-
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {isOnboardingCompleted ? (
                     <>
                         <Stack.Screen name="Home" component={HomeScreen} />
@@ -54,6 +52,8 @@ export default function App() {
     const [fontsLoaded, fontError] = useFonts({
         'markazi-regular': require('@assets/fonts/MarkaziText-Regular.ttf'),
         'karla-regular': require('@assets/fonts/Karla-Regular.ttf'),
+        'karla-bold': require('@assets/fonts/Karla-Bold.ttf'),
+        'karla-extra-bold': require('@assets/fonts/Karla-ExtraBold.ttf'),
     })
 
     const onLayoutRootView = useCallback(async () => {

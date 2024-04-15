@@ -1,5 +1,6 @@
 import { palette } from '@/const/palette'
 import { StyleSheet, View, Text, Image } from 'react-native'
+import SearchBar from '@/components/SearchBar'
 
 const HeroImage = require('@assets/images/Hero-image.png')
 
@@ -30,6 +31,7 @@ const Hero = ({ title, subTitle, body }: Props) => {
                     <Text style={styles.textSubuTitle}>{subTitle}</Text>
                 </View>
             )}
+            <SearchBar value={''} onChangeCallback={() => {}} />
         </View>
     )
 }
