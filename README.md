@@ -50,8 +50,9 @@ Here's a brief overview of the project structure:
 -   **src/:** Contains the source code for the React Native app.
     -   **components/:** Reusable components used throughout the app.
     -   **screens/:** Individual screens of the app (e.g., Home, Oboading, Profile).
-    -   **hooks/:** Navigation configuration using React Navigation.
-    -   **hooks/:** asdasd
+    -   **hooks/:** Hooks to allow keep logic related with AysncStorage.
+    -   **const/:** Constants used for API and colors
+    -   **context/:** Shared properties accross the components avoiding prop drilling.
     -   **utils/:** Utility functions and helpers.
     -   **App.tsx:** Entry point of the application.
 -   **assets/:** Static assets such as images and fonts.
