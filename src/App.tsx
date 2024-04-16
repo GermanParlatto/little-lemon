@@ -11,6 +11,7 @@ import HomeScreen from '@/screens/HomeScreen'
 import OnboardingProvider from '@/context/OnboardingContext'
 import UserProvider from './context/UserContext'
 import { useLoadUserData } from './hooks/useLoadUserData'
+import Header from './components/Header'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -28,19 +29,45 @@ const RootNavigation = memo(function RootNavigation() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator>
                 {isOnboardingCompleted ? (
                     <>
-                        <Stack.Screen name="Home" component={HomeScreen} />
+                        <Stack.Screen
+                            name="Home"
+                            component={HomeScreen}
+                            options={{
+                                header: ({ navigation }) => (
+                                    <Header
+                                        showAvar
+                                        onPressAvatar={() =>
+                                            navigation.navigate('Profile')
+                                        }
+                                    />
+                                ),
+                            }}
+                        />
                         <Stack.Screen
                             name="Profile"
                             component={ProfileScreen}
+                            options={{
+                                header: ({ navigation }) => (
+                                    <Header
+                                        showAvar
+                                        onPressBack={() => {
+                                            navigation.goBack()
+                                        }}
+                                    />
+                                ),
+                            }}
                         />
                     </>
                 ) : (
                     <Stack.Screen
                         name="Onboarding"
                         component={OnboardingScreen}
+                        options={{
+                            header: ({ navigation }) => <Header />,
+                        }}
                     />
                 )}
             </Stack.Navigator>

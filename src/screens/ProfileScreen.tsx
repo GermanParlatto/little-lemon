@@ -32,12 +32,6 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
     return (
         <View style={styles.container}>
-            <Header
-                onPressBack={() => {
-                    navigation.canGoBack() && navigation.goBack()
-                }}
-            />
-
             <AvatarSection size={'large'} />
 
             <ScrollView>
@@ -114,7 +108,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: '#FFF',
-        marginTop: 40,
+        paddingTop: 20,
     },
     rowBottom: {
         flex: 1,

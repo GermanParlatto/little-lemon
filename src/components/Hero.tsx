@@ -1,6 +1,8 @@
 import { palette } from '@/const/palette'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import SearchBar from '@/components/SearchBar'
+import debounce from 'lodash.debounce'
+import { useCallback, useMemo, useState } from 'react'
 
 const HeroImage = require('@assets/images/Hero-image.png')
 
@@ -8,8 +10,21 @@ type Props = {
     title: string
     subTitle?: string
     body?: string
+    onQuerySearch?: (text: string) => void
 }
-const Hero = ({ title, subTitle, body }: Props) => {
+const Hero = ({ title, subTitle, body, onQuerySearch }: Props) => {
+    const [searchBarText, setSearchBarText] = useState('')
+
+    const lookup = useCallback((q: string) => {
+        if (onQuerySearch) onQuerySearch(q)
+    }, [])
+
+    const debouncedLookup = useMemo(() => debounce(lookup, 500), [lookup])
+
+    const handleSearchChange = (text: string) => {
+        setSearchBarText(text)
+        debouncedLookup(text)
+    }
     return (
         <View style={styles.hero}>
             <View style={styles.row}>
@@ -31,7 +46,12 @@ const Hero = ({ title, subTitle, body }: Props) => {
                     <Text style={styles.textSubuTitle}>{subTitle}</Text>
                 </View>
             )}
-            <SearchBar value={''} onChangeCallback={() => {}} />
+            {onQuerySearch && (
+                <SearchBar
+                    value={searchBarText}
+                    onChangeCallback={(text) => handleSearchChange(text)}
+                />
+            )}
         </View>
     )
 }

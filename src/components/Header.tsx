@@ -6,10 +6,15 @@ import { palette } from '@/const/palette'
 const Logo = require('@assets/images/Logo.png')
 
 type Props = {
+    showAvar?: boolean
     onPressAvatar?: VoidFunction
     onPressBack?: VoidFunction
 }
-export default function Header({ onPressAvatar, onPressBack }: Props) {
+export default function Header({
+    showAvar,
+    onPressAvatar,
+    onPressBack,
+}: Props) {
     return (
         <View style={styles.header}>
             {onPressBack ? (
@@ -26,10 +31,14 @@ export default function Header({ onPressAvatar, onPressBack }: Props) {
             <View>
                 <Image source={Logo} />
             </View>
-            <AvatarWithInitials
-                size={'medium'}
-                onPressCallback={() => onPressAvatar && onPressAvatar()}
-            />
+            {showAvar ? (
+                <AvatarWithInitials
+                    size={'medium'}
+                    onPressCallback={() => onPressAvatar && onPressAvatar()}
+                />
+            ) : (
+                <View></View>
+            )}
         </View>
     )
 }
@@ -41,6 +50,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
+        paddingTop: 45,
+        paddingBottom: 12,
         minHeight: 70,
     },
 })

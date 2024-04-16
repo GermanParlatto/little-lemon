@@ -1,21 +1,22 @@
 import { palette } from '@/const/palette'
-import { StyleSheet, View, TextInput, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import ButtonMenu from '@/components/ButtonMenu'
 
-const menuList = ['starters', 'mains', 'deserts', 'drinks']
-
 type Props = {
-    onChangeCallback: (value: string) => void
-    value: string
+    onToggleCategory: (value: string) => void
+    categories: string[]
 }
-const MenuBreakdown = () => {
+const MenuBreakdown = ({ onToggleCategory, categories }: Props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Order for delivery!</Text>
             <ScrollView style={styles.pageViewContainer} horizontal>
-                {menuList.map((title, index) => (
+                {categories.map((title, index) => (
                     <View key={index} style={{ marginRight: 20 }}>
-                        <ButtonMenu label={title} onPressCallback={() => {}} />
+                        <ButtonMenu
+                            label={title}
+                            onPressCallback={() => onToggleCategory(title)}
+                        />
                     </View>
                 ))}
             </ScrollView>

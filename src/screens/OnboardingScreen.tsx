@@ -42,9 +42,6 @@ const OnboardingScreen = ({ navigation }: OnboardingScreenProps) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Image source={Logo} />
-            </View>
             <Hero title={title} subTitle={subTitle} body={textBody} />
             <InputAndLabel
                 label={'First name'}
