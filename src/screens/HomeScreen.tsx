@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
     const handleCategoryToggle = (category: string) => {
         if (categories.includes(category)) {
-            const newCategories = categories.filter((item) => item === category)
+            const newCategories = categories.filter((item) => item !== category)
             newCategories.length === 0
                 ? setCategories(availableCategories)
                 : setCategories(newCategories)
@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
     return (
         <View style={styles.container}>
-            <Header onPressAvatar={() => navigation.navigate('Profile')} />
+            {/* <Header onPressAvatar={() => navigation.navigate('Profile')} /> */}
 
             <Hero
                 onQuerySearch={(text) => setQuerySearch(text)}
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: '#FFF',
-        marginTop: 40,
     },
 })
 
