@@ -5,6 +5,7 @@ import storage from './storage'
 
 export default function useProfileData() {
     const [profileData, setProfileData] = useState<Profile | null>(null)
+    const [triggerRead, setTriggerRead] = useState(false)
 
     useEffect(() => {
         const readProfileData = async () => {
@@ -18,7 +19,7 @@ export default function useProfileData() {
             }
         }
         readProfileData()
-    }, [])
+    }, [triggerRead])
 
     const updateProfile = (key: string, value: string | boolean) => {
         // console.log('Updating profile key ->', key)
@@ -29,5 +30,7 @@ export default function useProfileData() {
         })
     }
 
-    return { profileData, updateProfile }
+    const discardChanges = () => setTriggerRead(!triggerRead)
+
+    return { profileData, updateProfile, discardChanges }
 }

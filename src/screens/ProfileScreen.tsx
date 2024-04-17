@@ -19,14 +19,15 @@ type ProfileScreenProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     const { setOnboardingStatus } = useContext(OnboardingContext)
-    const { image } = useContext(UserContext)
-    const { profileData, updateProfile } = useProfileData()
+    const { image, setImage } = useContext(UserContext)
+    const { profileData, updateProfile, discardChanges } = useProfileData()
 
     // console.log({ profileData })
 
     const handleLogOut = async () => {
         await storage.remove({ key: ONBOARDING_STATUS })
         await storage.remove({ key: PROFILE_DATA })
+        setImage(null)
         setOnboardingStatus('uncompleted')
     }
 
@@ -35,6 +36,11 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         // console.log({ newProfile })
         await storage.save({ key: PROFILE_DATA, data: newProfile })
         Alert.alert('Changes saved')
+    }
+
+    const handleDiscardChanges = async () => {
+        discardChanges()
+        Alert.alert('Changes discarded')
     }
 
     return (
@@ -106,7 +112,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
                     <ButtonSecondary
                         outlined
                         label={'Discard changes'}
-                        onPressCallback={() => Alert.alert('Discarded canges')}
+                        onPressCallback={() => handleDiscardChanges()}
                     />
                     <ButtonSecondary
                         label={'Save changes'}
