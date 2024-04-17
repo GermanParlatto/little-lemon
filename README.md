@@ -13,7 +13,6 @@ Follow these instructions to get the project up and running on your local machin
 ### Prerequisites
 
 -   [Node.js](https://nodejs.org/) (version 18 or later)
--   [Yarn](https://yarnpkg.com/) (version 1.22 or later)
 
 ### Installation
 
@@ -32,7 +31,7 @@ Follow these instructions to get the project up and running on your local machin
 3. Install dependencies using Yarn:
 
     ```bash
-    yarn install
+    npm install
     ```
 
 ### Running the Project
