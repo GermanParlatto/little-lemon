@@ -39,9 +39,9 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
     return (
         <View style={styles.container}>
-            <AvatarSection size={'large'} />
-
             <ScrollView>
+                <AvatarSection size={'large'} />
+
                 <InputAndLabel
                     label={'First name'}
                     value={profileData?.firstName ?? ''}
@@ -96,26 +96,24 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
                         updateProfile('newsletter', value)
                     }
                 />
-                <View style={styles.rowBottom}>
-                    <ButtonPrimary
-                        label={'Log out'}
-                        onPressCallback={() => handleLogOut()}
-                    />
-                    <View style={styles.row}>
-                        <ButtonSecondary
-                            outlined
-                            label={'Discard changes'}
-                            onPressCallback={() =>
-                                Alert.alert('LOG OUT PRESSED')
-                            }
-                        />
-                        <ButtonSecondary
-                            label={'Save changes'}
-                            onPressCallback={() => handleSaveChanges()}
-                        />
-                    </View>
-                </View>
             </ScrollView>
+            <View style={styles.rowBottom}>
+                <ButtonPrimary
+                    label={'Log out'}
+                    onPressCallback={() => handleLogOut()}
+                />
+                <View style={styles.row}>
+                    <ButtonSecondary
+                        outlined
+                        label={'Discard changes'}
+                        onPressCallback={() => Alert.alert('Discarded canges')}
+                    />
+                    <ButtonSecondary
+                        label={'Save changes'}
+                        onPressCallback={() => handleSaveChanges()}
+                    />
+                </View>
+            </View>
         </View>
     )
 }
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     rowBottom: {
-        flex: 1,
+        display: 'flex',
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 30,

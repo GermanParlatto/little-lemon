@@ -1,13 +1,12 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { AvatarProps, Dialog } from '@rneui/themed'
 import { useContext, useState } from 'react'
 import { UserContext } from '@/context/UserContext'
 import ButtonSecondary from './ButtonSecondary'
 import * as ImagePicker from 'expo-image-picker'
 import AvatarWithInitials from './AvatarWithInitials'
-import storage from '@/hooks/storage'
 import useProfileData from '@/hooks/useProfileData'
-import { PROFILE_DATA } from '@/const/keys'
+import { palette } from '@/const/palette'
 
 type Props = {
     size: AvatarProps['size']
@@ -35,7 +34,6 @@ export default function AvatarSection({ size }: Props) {
             const newImage = result.assets[0].uri
             setImage(newImage)
         }
-        toggleDialog()
     }
 
     return (
@@ -44,6 +42,17 @@ export default function AvatarSection({ size }: Props) {
                 size={size}
                 onPressCallback={() => toggleDialog()}
             />
+            <View style={styles.rowGrow}>
+                <ButtonSecondary
+                    label={'Change'}
+                    onPressCallback={() => pickImage()}
+                />
+                <ButtonSecondary
+                    outlined
+                    label={'Remove'}
+                    onPressCallback={() => setImage(null)}
+                />
+            </View>
             <Dialog
                 isVisible={openDialog}
                 onBackdropPress={() => toggleDialog()}
@@ -71,9 +80,15 @@ const styles = StyleSheet.create({
     row: {
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
         justifyContent: 'space-around',
-
+        paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    rowGrow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
         alignItems: 'center',
     },
 })
