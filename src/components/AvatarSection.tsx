@@ -5,6 +5,9 @@ import { UserContext } from '@/context/UserContext'
 import ButtonSecondary from './ButtonSecondary'
 import * as ImagePicker from 'expo-image-picker'
 import AvatarWithInitials from './AvatarWithInitials'
+import storage from '@/hooks/storage'
+import useProfileData from '@/hooks/useProfileData'
+import { PROFILE_DATA } from '@/const/keys'
 
 type Props = {
     size: AvatarProps['size']
@@ -12,7 +15,7 @@ type Props = {
 
 export default function AvatarSection({ size }: Props) {
     const [openDialog, setOpenDialog] = useState(false)
-
+    const { profileData } = useProfileData()
     const { setImage } = useContext(UserContext)
 
     const toggleDialog = () => {
@@ -29,7 +32,8 @@ export default function AvatarSection({ size }: Props) {
         })
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri)
+            const newImage = result.assets[0].uri
+            setImage(newImage)
         }
         toggleDialog()
     }

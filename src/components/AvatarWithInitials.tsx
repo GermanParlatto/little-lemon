@@ -10,9 +10,9 @@ type Props = {
 }
 
 export default function AvatarWithInitials({ size, onPressCallback }: Props) {
-    const { firstName, lastName, image, setImage } = useContext(UserContext)
+    const { firstName, image, setImage } = useContext(UserContext)
 
-    const initials = getInitalsFromNames(firstName, lastName)
+    const initials = getInitalsFromNames(firstName)
 
     return (
         <>

@@ -1,6 +1,6 @@
 export default function getInitalsFromNames(
-    firstName: string,
-    lastName: string
+    firstName?: string,
+    lastName?: string
 ) {
     if (!firstName && !lastName) return 'NN'
 
@@ -9,7 +9,7 @@ export default function getInitalsFromNames(
         result = firstName.slice(0, 1).toUpperCase()
     }
 
-    if (firstName) {
+    if (lastName) {
         result.concat(lastName.slice(0, 1).toUpperCase())
     }
     return result

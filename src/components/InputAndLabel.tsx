@@ -16,11 +16,10 @@ const InputAndLabel = ({ onChangeCallback, value, label, mask }: Props) => {
                 <MaskedTextInput
                     mask={mask}
                     onChangeText={(text, rawText) => {
-                        console.log(text)
-                        console.log(rawText)
-                        onChangeCallback(text)
+                        onChangeCallback(rawText)
                     }}
                     style={styles.textInput}
+                    defaultValue={value}
                 />
             ) : (
                 <TextInput

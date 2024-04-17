@@ -1,33 +1,40 @@
 import ButtonPrimary from '@/components/ButtonPrimary'
 import InputAndLabel from '@/components/InputAndLabel'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View, Alert, Text, ScrollView } from 'react-native'
 import { palette } from '@/const/palette'
 import ButtonSecondary from '@/components/ButtonSecondary'
 import storage from '@/hooks/storage'
-import { ONBOARDING_STATUS, FIRST_NAME, EMAIL } from '@/const/keys'
+import { ONBOARDING_STATUS, PROFILE_DATA } from '@/const/keys'
 import { RootStackParamList } from '@/App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { OnboardingContext } from '@/context/OnboardingContext'
-import { UserContext } from '@/context/UserContext'
 import AvatarSection from '@/components/AvatarSection'
 import CheckBoxAndLabel from '@/components/CheckBoxAndLabel'
-import Header from '@/components/Header'
+import { Profile } from '@/types'
+import useProfileData from '@/hooks/useProfileData'
+import { UserContext } from '@/context/UserContext'
 
 type ProfileScreenProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     const { setOnboardingStatus } = useContext(OnboardingContext)
-    const { firstName, lastName, phoneNumber, email, setFirstName, setEmail } =
-        useContext(UserContext)
+    const { image } = useContext(UserContext)
+    const { profileData, updateProfile } = useProfileData()
+
+    // console.log({ profileData })
 
     const handleLogOut = async () => {
         await storage.remove({ key: ONBOARDING_STATUS })
-        await storage.remove({ key: FIRST_NAME })
-        await storage.remove({ key: EMAIL })
+        await storage.remove({ key: PROFILE_DATA })
         setOnboardingStatus('uncompleted')
-        setEmail('')
-        setFirstName('')
+    }
+
+    const handleSaveChanges = async () => {
+        const newProfile = { ...profileData, ['image']: image }
+        // console.log({ newProfile })
+        await storage.save({ key: PROFILE_DATA, data: newProfile })
+        Alert.alert('Changes saved')
     }
 
     return (
@@ -37,45 +44,57 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
             <ScrollView>
                 <InputAndLabel
                     label={'First name'}
-                    value={firstName}
-                    onChangeCallback={(text) => {}}
+                    value={profileData?.firstName ?? ''}
+                    onChangeCallback={(text) =>
+                        updateProfile('firstName', text)
+                    }
                 />
                 <InputAndLabel
                     label={'Last name'}
-                    value={lastName}
-                    onChangeCallback={(text) => {}}
+                    value={profileData?.lastName ?? ''}
+                    onChangeCallback={(text) => updateProfile('lastName', text)}
                 />
                 <InputAndLabel
                     label={'Email'}
-                    value={email}
-                    onChangeCallback={(text) => {}}
+                    value={profileData?.email ?? ''}
+                    onChangeCallback={(text) => updateProfile('email', text)}
                 />
                 <InputAndLabel
                     label={'Phone number'}
                     mask={'(999)-999-999'}
-                    value={phoneNumber}
-                    onChangeCallback={(text) => {}}
+                    value={profileData?.phoneNumber ?? ''}
+                    onChangeCallback={(text) =>
+                        updateProfile('phoneNumber', text)
+                    }
                 />
                 <Text style={styles.textLabel}>Email notification</Text>
                 <CheckBoxAndLabel
                     label={'Order statuses'}
-                    value={true}
-                    onChangeCallback={() => {}}
+                    value={profileData?.orderStatus ?? true}
+                    onChangeCallback={(value) =>
+                        updateProfile('orderStatus', value)
+                    }
                 />
                 <CheckBoxAndLabel
                     label={'Password changes'}
-                    value={true}
-                    onChangeCallback={() => {}}
+                    value={profileData?.passwordChanges ?? true}
+                    onChangeCallback={(value) =>
+                        updateProfile('passwordChanges', value)
+                    }
                 />
                 <CheckBoxAndLabel
                     label={'Special offers'}
-                    value={true}
-                    onChangeCallback={() => {}}
+                    value={profileData?.specialOffers ?? true}
+                    onChangeCallback={(value) =>
+                        updateProfile('specialOffers', value)
+                    }
                 />
                 <CheckBoxAndLabel
-                    label={'Order statuses'}
-                    value={true}
-                    onChangeCallback={() => {}}
+                    label={'Newsletter'}
+                    value={profileData?.newsletter ?? true}
+                    onChangeCallback={(value) =>
+                        updateProfile('newsletter', value)
+                    }
                 />
                 <View style={styles.rowBottom}>
                     <ButtonPrimary
@@ -92,9 +111,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
                         />
                         <ButtonSecondary
                             label={'Save changes'}
-                            onPressCallback={() =>
-                                Alert.alert('LOG OUT PRESSED')
-                            }
+                            onPressCallback={() => handleSaveChanges()}
                         />
                     </View>
                 </View>

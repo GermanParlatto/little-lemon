@@ -1,29 +1,27 @@
 import { useContext, useEffect } from 'react'
-import storage from './storage'
-import { FIRST_NAME, EMAIL } from '@/const/keys'
 import { UserContext } from '@/context/UserContext'
+import useProfileData from './useProfileData'
+import storage from './storage'
+import { PROFILE_DATA } from '@/const/keys'
+import { Profile } from '@/types'
 
 const useLoadUserData = () => {
-    const { setFirstName, setEmail } = useContext(UserContext)
-    // console.log('Loading user data...')
-    const loadUserData = async () => {
-        try {
-            const firstName = await storage.load({
-                key: FIRST_NAME,
-            })
+    const { setFirstName, setImage } = useContext(UserContext)
 
-            if (firstName) setFirstName(firstName)
-
-            const email = await storage.load({
-                key: EMAIL,
-            })
-
-            if (email) setEmail(email)
-        } catch (e) {
-            console.log('Custom error occourrs on loading async storage:', e)
-        }
-    }
     useEffect(() => {
+        const loadUserData = async () => {
+            try {
+                const profile = await storage.load<Profile>({
+                    key: PROFILE_DATA,
+                })
+                if (profile && profile.firstName)
+                    setFirstName(profile.firstName)
+
+                if (profile && profile.image) setImage(profile.image)
+            } catch (e) {
+                console.log('Custom error loading async storage:', e)
+            }
+        }
         loadUserData()
     }, [])
 }

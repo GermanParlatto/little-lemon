@@ -1,8 +1,6 @@
 import { palette } from '@/const/palette'
 import { CheckBox } from '@rneui/themed'
-import { useState } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
-import { MaskedTextInput } from 'react-native-mask-text'
+import { StyleSheet, View, Text } from 'react-native'
 
 type Props = {
     onChangeCallback: (value: boolean) => void
@@ -11,7 +9,7 @@ type Props = {
 }
 const CheckBoxAndLabel = ({ onChangeCallback, value, label }: Props) => {
     return (
-        <View style={styles.inputContainer}>
+        <View>
             <CheckBox
                 checked={value}
                 onPress={() => onChangeCallback(!value)}
@@ -19,23 +17,23 @@ const CheckBoxAndLabel = ({ onChangeCallback, value, label }: Props) => {
                 checkedIcon="checkbox-marked"
                 uncheckedIcon="checkbox-blank-outline"
                 checkedColor={palette.primary.main}
+                style={styles.checkbox}
+                title={label}
+                textStyle={styles.textLabel}
+                containerStyle={styles.checkbox}
             />
-            <Text style={styles.textLabel}>{label}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
     textLabel: {
         fontFamily: 'karla-regular',
         fontSize: 18,
         color: palette.hightlight.dark,
+    },
+    checkbox: {
+        margin: 0,
     },
 })
 

@@ -2,13 +2,15 @@ import { RootStackParamList } from '@/App'
 import ButtonPrimary from '@/components/ButtonPrimary'
 import Hero from '@/components/Hero'
 import InputAndLabel from '@/components/InputAndLabel'
-import { EMAIL, FIRST_NAME, ONBOARDING_STATUS } from '@/const/keys'
+import { ONBOARDING_STATUS, PROFILE_DATA } from '@/const/keys'
 import { OnboardingContext } from '@/context/OnboardingContext'
 import { UserContext } from '@/context/UserContext'
 import storage from '@/hooks/storage'
+import useProfileData from '@/hooks/useProfileData'
+import { Profile } from '@/types'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useContext } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 const Logo = require('@assets/images/Logo.png')
 
@@ -24,19 +26,20 @@ type OnboardingScreenProps = NativeStackScreenProps<
 
 const OnboardingScreen = ({ navigation }: OnboardingScreenProps) => {
     const { setOnboardingStatus } = useContext(OnboardingContext)
-    const { firstName, email, setFirstName, setEmail } = useContext(UserContext)
+    const { setFirstName } = useContext(UserContext)
+    const { profileData: profile, updateProfile } = useProfileData()
 
-    const completeOnboarding = async (name: string, email: string) => {
-        const fieldValids = name !== '' && email !== ''
-
+    const completeOnboarding = async () => {
+        const fieldValids = profile?.firstName && profile?.email
+        console.log({ profile })
         if (fieldValids) {
             await storage.save({
                 key: ONBOARDING_STATUS,
                 data: 'completed',
             })
-            await storage.save({ key: FIRST_NAME, data: name })
-            await storage.save({ key: EMAIL, data: email })
             setOnboardingStatus('completed')
+            await storage.save({ key: PROFILE_DATA, data: profile })
+            setFirstName(profile.firstName)
         }
     }
 
@@ -45,18 +48,18 @@ const OnboardingScreen = ({ navigation }: OnboardingScreenProps) => {
             <Hero title={title} subTitle={subTitle} body={textBody} />
             <InputAndLabel
                 label={'First name'}
-                value={firstName}
-                onChangeCallback={(text) => setFirstName(text)}
+                value={profile?.firstName ?? ''}
+                onChangeCallback={(text) => updateProfile('firstName', text)}
             />
             <InputAndLabel
                 label={'Email'}
-                value={email}
-                onChangeCallback={(text) => setEmail(text)}
+                value={profile?.email ?? ''}
+                onChangeCallback={(text) => updateProfile('email', text)}
             />
             <View style={styles.rowBottom}>
                 <ButtonPrimary
                     label={'Next'}
-                    onPressCallback={() => completeOnboarding(firstName, email)}
+                    onPressCallback={() => completeOnboarding()}
                 />
             </View>
         </View>
