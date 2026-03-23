@@ -1,7 +1,6 @@
 # Little Lemon Ordering App
 
-Welcome to the Restaurant Ordering App! This mobile application built with React Native and Expo SDK 50 aims to simplify the process of ordering food from restaurants. It also features a fake login flow and a profile page for users.
-
+Welcome to the Restaurant Ordering App! This mobile application built with React Native and Expo SDK 50 aims to simplify the process of ordering food from restaurants.
 ### Wireframe
 
 ![IMAGE!](https://github.com/GermanParlatto/little-lemon/blob/main/wireframe.jpg?raw=true)
